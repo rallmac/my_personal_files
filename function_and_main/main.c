@@ -10,15 +10,24 @@ int main(void)
 {
 	int sum;
 	int sub;
+	int mul;
 
-	sum = add(10, 20);
+	printf("This programm sums, subtracts, multiplies and divides 20 and 10");
+	printf("\n");
+
+	sum = add(20, 10);
 
 	printf("The sum is %d", sum);
 	printf("\n");
 
-	sub = subtract(50, 30);
+	sub = subtract(20, 10);
 
 	printf("The difference is %d", sub);
+	printf("\n");
+
+	mul = multiplication(20, 10);
+
+	printf("The product is %d", mul);
 	printf("\n");
 
 	return (0);
