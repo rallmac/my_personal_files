@@ -1,0 +1,24 @@
+hijack_command() {
+	CALLBACK=$1
+	COMMAND=$2
+	NEW_COMMAND=$3
+
+
+	ORIG_COMMAND=$(which $COMMAND 2>/dev/null)
+
+	eval "
+
+		function $COMMAND() {
+			args=()
+			for arg; do
+				args[\${#args[*]}]=\"'\$arg'\"
+			done
+			if $CALLBACK; then
+				eval $NEW_COMMAND \${args[*]}
+			else
+				if [ \"$ORIG_COMMAND\" ]; then
+					eval $ORIG_COMMAND \${args[*]}
+				fi
+			fi
+		}"
+}
