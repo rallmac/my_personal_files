@@ -11,6 +11,7 @@ int main(void)
 	int sum;
 	int sub;
 	int mul;
+	int div;
 
 	printf("This programm sums, subtracts, multiplies and divides 20 and 10");
 	printf("\n");
@@ -28,6 +29,11 @@ int main(void)
 	mul = multiplication(20, 10);
 
 	printf("The product is %d", mul);
+	printf("\n");
+
+	div = divide(20, 10);
+
+	printf("The quotient is %d", div);
 	printf("\n");
 
 	return (0);
