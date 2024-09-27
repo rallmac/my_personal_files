@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>View Users</title>
+{% endblock %}
+
+{% block body %}
+<div class="container page-container">
+    <h2 class="text-center">People you may know</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="messages list-unstyled">
+                {% for category, message in messages %}
+                    <li class="alert alert-{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <div class="row">
+        {% for user in users %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_picture) }}" class="card-img-top" alt="{{ user.username }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user.username }}</h5>
+                        <p class="card-text">{{ user.email }}</p>
+                        <p class="card-text">Phone: {{ user.phone_number }}</p>
+                        <p class="card-text">Occupation: {{ user.occupation }}</p>
+                        <!-- Add more user information here if needed -->
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="go-back-home text-center">
+        <button class="btn btn-primary" onclick="window.location.href='{{ url_for('auth.home') }}'">Back to Home</button>
+    </div>
+</div>
+{% endblock %}
