@@ -1,12 +1,14 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, flash, request
 from models import db, User
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager, current_user, login_required
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
 from socketio_instance import socketio  # Import from socketio_instance.py
 from routes.auth_routes import auth_bp
 from routes.chat_routes import chat_bp
+from routes.models import User, db
+from routes.chat_routes import MessageForm
 from flask_scss import Scss
 import os
 
@@ -76,6 +78,19 @@ def index():
     else:
         username = 'Guest'
     return render_template('index.html', username=username)
+
+@app.route('/send_message/<int:receiver_id>', methods=['GET', 'POST'])
+@login_required
+def send_message(receiver_id):
+    form = MessageForm()
+    receiver = User.query.get_or_404(receiver_id)
+    if form.validate_on_submit():
+        message = Message(sender_id=current_user.id, receiver_id=receiver.id, content=form.content.data)
+        db.session.add(message)
+        db.session.commit()
+        flash('Your message has been sent!', 'success')
+        return redirect(url_for('view_users'))
+    return render_template('send_message.html', title='Send Message', form=form, receiver=receiver)
 
 
 """ Database Initialization """

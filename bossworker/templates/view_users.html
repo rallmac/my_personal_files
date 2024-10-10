@@ -26,6 +26,7 @@
                         <p class="card-text">{{ user.email }}</p>
                         <p class="card-text">Phone: {{ user.phone_number }}</p>
                         <p class="card-text">Occupation: {{ user.occupation }}</p>
+                        <a href="{{ url_for('send_message', receiver_id=user.id) }}" class="btn btn-primary">Send Message</a>
                         <!-- Add more user information here if needed -->
                     </div>
                 </div>

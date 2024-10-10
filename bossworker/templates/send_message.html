@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Send Message</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2 class="text-center">Send Message to {{ receiver.username }}</h2>
+    <form method="POST" action="{{ url_for('send_message', receiver_id=receiver.id) }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.content.label(class="form-control-label") }}
+            {{ form.content(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

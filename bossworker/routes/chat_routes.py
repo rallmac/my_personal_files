@@ -3,8 +3,15 @@ from flask_login import login_required, current_user
 from flask_socketio import send, join_room, leave_room
 from models import db, User
 from socketio_instance import socketio  # Import from socketio_instance.py
+from flask_wtf import FlaskForm
+from wtforms import TextAreaField, SubmitField
+from wtforms.validators import DataRequired
 
 chat_bp = Blueprint('chat', __name__)
+
+class MessageForm(FlaskForm):
+    content = TextAreaField('Message', validators=[DataRequired()])
+    submit = SubmitField('Send')
 
 
 @chat_bp.route('/chat')
